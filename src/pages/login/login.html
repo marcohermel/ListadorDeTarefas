@@ -1,0 +1,69 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Login</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <ion-card>
+    <ion-card-header>
+      Login
+    </ion-card-header>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-label floating>
+                Email
+              </ion-label>
+              <ion-input>
+              </ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-label floating>
+                Senha
+              </ion-label>
+              <ion-input type="password">
+              </ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <button ion-button full  >
+              Login
+            </button>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col width-50>
+            <button ion-button full>
+              Login com Facebook
+            </button>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col width-50>
+            <button ion-button full >
+                Login com Google
+              </button>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <a (click)="doRegister()">Registrar-se</a>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
