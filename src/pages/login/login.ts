@@ -1,6 +1,8 @@
+import { Credencial } from './../../model/credencial';
+import { LoginProvider } from './../../providers/login/login';
 import { RegistrarPage } from './../registrar/registrar';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController } from 'ionic-angular';
 
 /**
  * Generated class for the LoginPage page.
@@ -16,17 +18,31 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class LoginPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-  }
+  credencial: Credencial;
 
+  constructor(public navCtrl: NavController, public loginProvider: LoginProvider) {
+    this.credencial = new Credencial();
+  }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad LoginPage');
+    this.loginProvider.loginSucessoEventEmitter.subscribe(user => console.log(user));
+    this.loginProvider.loginFalhaEventEmitter.subscribe(error => console.log(error));
+
   }
 
+  loginWithCredencials() {
+    this.loginProvider.loginWithCredentials(this.credencial);
+  }
+  loginWithGoogle() {
+    this.loginProvider.loginWithGoogle();
+  }
 
   doRegister() {
     this.navCtrl.push(RegistrarPage);
+  }
+
+  sair(){
+    this.loginProvider.logOut();
   }
 
 }

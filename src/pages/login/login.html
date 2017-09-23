@@ -21,7 +21,7 @@
               <ion-label floating>
                 Email
               </ion-label>
-              <ion-input>
+              <ion-input name="email" [(ngModel)]="credencial.email">
               </ion-input>
             </ion-item>
           </ion-col>
@@ -32,28 +32,28 @@
               <ion-label floating>
                 Senha
               </ion-label>
-              <ion-input type="password">
+              <ion-input type="password" name="senha" [(ngModel)]="credencial.senha" >
               </ion-input>
             </ion-item>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col>
-            <button ion-button full  >
+            <button ion-button full  (click)="loginWithCredencials()" >
               Login
             </button>
           </ion-col>
         </ion-row>
-        <ion-row>
+       <!--  <ion-row>
           <ion-col width-50>
             <button ion-button full>
               Login com Facebook
             </button>
           </ion-col>
-        </ion-row>
+        </ion-row> -->
         <ion-row>
           <ion-col width-50>
-            <button ion-button full >
+            <button ion-button full (click)="loginWithGoogle()" >
                 Login com Google
               </button>
           </ion-col>
