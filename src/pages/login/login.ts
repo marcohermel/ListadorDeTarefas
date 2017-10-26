@@ -1,15 +1,10 @@
+import { TarefasListPage } from './../tarefas-list/tarefas-list';
 import { Credencial } from './../../model/credencial';
 import { LoginProvider } from './../../providers/login/login';
 import { RegistrarPage } from './../registrar/registrar';
 import { Component } from '@angular/core';
 import { IonicPage, NavController } from 'ionic-angular';
 
-/**
- * Generated class for the LoginPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
@@ -25,23 +20,31 @@ export class LoginPage {
   }
 
   ionViewDidLoad() {
-    this.loginProvider.loginSucessoEventEmitter.subscribe(user => console.log(user));
-    this.loginProvider.loginFalhaEventEmitter.subscribe(error => console.log(error));
+
+    this.loginProvider.loginSucessoEventEmitter.subscribe(() => this.navCtrl.setRoot(TarefasListPage));
+    this.loginProvider.loginFalhaEventEmitter.subscribe(error => alert("erro: " + error.message));
+
+    this.loginProvider.logoutEventEmitter.subscribe(user => this.navCtrl.setRoot(LoginPage));
 
   }
 
   loginWithCredencials() {
     this.loginProvider.loginWithCredentials(this.credencial);
   }
+
   loginWithGoogle() {
     this.loginProvider.loginWithGoogle();
+  }
+
+  loginWithFacebook() {
+    this.loginProvider.loginWithFacebook();
   }
 
   doRegister() {
     this.navCtrl.push(RegistrarPage);
   }
 
-  sair(){
+  sair() {
     this.loginProvider.logOut();
   }
 

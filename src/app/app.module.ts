@@ -1,3 +1,6 @@
+import { TarefaListItemComponent } from './../components/tarefa-list-item/tarefa-list-item';
+import { TarefasAddPage } from './../pages/tarefas-add/tarefas-add';
+import { TarefasListPage } from './../pages/tarefas-list/tarefas-list';
 import { HttpModule } from '@angular/http';
 import { RegistrarPage } from './../pages/registrar/registrar';
 import { LoginPage } from './../pages/login/login';
@@ -8,9 +11,10 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 
 import { MyApp } from './app.component';
-import { HomePage } from '../pages/home/home';
 import { LoginProvider } from '../providers/login/login';
 import firebase from "firebase";
+import { TarefaProvider } from '../providers/tarefa/tarefa';
+import { LovProvider } from '../providers/lov/lov';
 
 const firebaseConfig = {
   apiKey: "AIzaSyAgZXL3TcEC_sj06YI7M7rsebBM-ITqbRc",
@@ -24,9 +28,11 @@ const firebaseConfig = {
 @NgModule({
   declarations: [
     MyApp,
-    HomePage,
     LoginPage,
     RegistrarPage,
+    TarefasListPage,
+    TarefaListItemComponent,
+    TarefasAddPage
   ],
   imports: [
     BrowserModule,
@@ -36,15 +42,19 @@ const firebaseConfig = {
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage,
     LoginPage,
-    RegistrarPage
+    RegistrarPage,
+    TarefasListPage,
+    TarefasAddPage,
+    TarefaListItemComponent
   ],
   providers: [
     StatusBar,
     SplashScreen,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
-    LoginProvider
+    LoginProvider,
+    TarefaProvider,
+    LovProvider
   ],
 })
 export class AppModule {

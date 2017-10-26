@@ -21,6 +21,15 @@ export class LoginProvider {
 
     firebase.auth().onAuthStateChanged(usuario => {
       this.callBackStateChange(usuario);
+
+      console.log({"usuario:" : usuario} );
+      if(usuario){
+        firebase.auth().getRedirectResult()
+        .then(resultado => this.callBackSuccessLogin(resultado))
+        .catch(error => this.callBackFalhaLogin(error));
+      }
+
+    
     })
 
   }
@@ -43,11 +52,19 @@ export class LoginProvider {
       .catch(error => this.callBackFalhaLogin(error))
   }
 
-  loginWithGoogle(){
+  loginWithGoogle() {
     let provider = new firebase.auth.GoogleAuthProvider();
-    firebase.auth().signInWithPopup(provider)
+    firebase.auth().signInWithRedirect(provider)
     .then(resultado => this.callBackSuccessLogin(resultado))
-    .catch(error => this.callBackFalhaLogin(error))
+    .catch(error => this.callBackFalhaLogin(error));
+
+  }
+
+  loginWithFacebook() {
+    let provider = new firebase.auth.FacebookAuthProvider();
+    firebase.auth().signInWithPopup(provider)
+      .then(resultado => this.callBackSuccessLogin(resultado))
+      .catch(error => this.callBackFalhaLogin(error))
   }
 
   registrarUsuario(credencial: Credencial) {
@@ -64,9 +81,9 @@ export class LoginProvider {
     this.loginFalhaEventEmitter.emit({ code: error.code, message: error.message, email: error.email, credencial: error.credencial });
   }
 
-  logOut(){
+  logOut() {
     firebase.auth().signOut()
-    .then(()=> this.logoutEventEmitter.emit(true))
-    .catch(error => this.callBackFalhaLogin(error));
+      .then(() => this.logoutEventEmitter.emit(true))
+      .catch(error => this.callBackFalhaLogin(error));
   }
 }

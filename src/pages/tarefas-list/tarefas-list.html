@@ -1,0 +1,59 @@
+<ion-menu [content]="content" id="menu1">
+
+  <ion-header>
+    <ion-toolbar color="secondary">
+      <ion-title>Menu</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+    <ion-list>
+      <button ion-item menuClose="menu1" detail-none>
+        Close Menu
+      </button>
+      <button ion-button full clear (click)="sair()">
+        Sair
+      </button>
+    </ion-list>
+  </ion-content>
+
+</ion-menu>
+
+<ion-nav [root]="root" #content swipeBackEnabled="false"></ion-nav>
+
+<ion-header>
+
+  <ion-navbar>
+    <button ion-button [menuToggle]="activeMenu">
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>
+      Menu
+    </ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-list [virtualScroll]="tarefas">
+    <ion-item-sliding *virtualItem="let tarefa" #item>
+      <ion-item>
+        <button ion-button (click)="atualizarTarefa(tarefa)">
+          {{tarefa.titulo}}
+        </button>
+      </ion-item>
+      <ion-item-options>
+        <button ion-button clear icon-only (click)="deletarTarefa(tarefa)">
+          <ion-icon name="trash"></ion-icon>
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+
+</ion-content>
+<ion-fab bottom right>
+  <button ion-fab color='primary' (click)="adicionarTarefa()">
+    <ion-icon name='add'></ion-icon>
+  </button>
+</ion-fab>
