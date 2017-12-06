@@ -4,6 +4,7 @@ import { TarefaProvider } from './../../providers/tarefa/tarefa';
 import { Tarefa } from './../../model/tarefa';
 import { Component, NgZone } from '@angular/core';
 import { IonicPage, NavController } from 'ionic-angular';
+import { ToastController } from 'ionic-angular/components/toast/toast-controller';
 
 @IonicPage()
 @Component({
@@ -17,14 +18,29 @@ export class TarefasListPage {
 
   constructor(public navCtrl: NavController,
     public tarefaProvider: TarefaProvider,
-     public loginProvider: LoginProvider,
+    public loginProvider: LoginProvider,
+    public toastCtrl : ToastController,
     public ngZone: NgZone) { }
 
 
 
   ionViewDidLoad() {
+    this.tarefaProvider.reference.on('child_removed', (snapshot) => {
+      let tarefaRemovida = snapshot.val();
+      this.toastCtrl.create({
+        message: 'Tarefa ' + tarefaRemovida.titulo + ' removida',
+       duration: 3000
+      }).present();
+    })
+
     this.tarefaProvider.reference.on('value', (snapshot) => {
-      
+      /*
+      *value - Escuta todas as alterações da referência
+      *child_added - Ouvinte para quando um filho for adicionado
+      *child_changed - Ouvinte para quando um algum for alterado
+      *child_removed - Ouvinte para quando um algum for removido
+      *child_moved = Ouvinte para ouvir as mudanças na prioridade de um filho
+      */
       this.ngZone.run(() => {
         let innerArray = new Array();
 

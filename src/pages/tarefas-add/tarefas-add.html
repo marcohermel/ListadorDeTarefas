@@ -16,7 +16,7 @@
             <ion-label floating>
               Titulo
             </ion-label>
-            <ion-input name="titulo" [(ngModel)]="tarefa.titulo">
+            <ion-input name="titulo" [(ngModel)]="tarefa.titulo" required>
             </ion-input>
           </ion-item>
         </ion-col>
@@ -27,7 +27,7 @@
             <ion-label floating>
               Descrição
             </ion-label>
-            <ion-input name="descricao" [(ngModel)]="tarefa.descricao">
+            <ion-input name="descricao" [(ngModel)]="tarefa.descricao" required>
             </ion-input>
           </ion-item>
         </ion-col>
@@ -39,7 +39,7 @@
               Status
             </ion-label>
             <ion-select name="estado" [(ngModel)]="tarefa.estado">
-              <ion-option *ngFor="let estado of lovProvider.getTarefaStates()">
+              <ion-option *ngFor="let estado of lovProvider.getTarefaStates()" required>
                 {{estado}}
               </ion-option>
             </ion-select>
