@@ -19,28 +19,48 @@ export class TarefasListPage {
   constructor(public navCtrl: NavController,
     public tarefaProvider: TarefaProvider,
     public loginProvider: LoginProvider,
-    public toastCtrl : ToastController,
+    public toastCtrl: ToastController,
     public ngZone: NgZone) { }
 
 
 
   ionViewDidLoad() {
-    this.tarefaProvider.reference.on('child_removed', (snapshot) => {
+    /*
+     *value - Escuta todas as alterações da referência
+     *child_added - Ouvinte para quando um filho for adicionado
+     *child_changed - Ouvinte para quando um algum for alterado
+     *child_removed - Ouvinte para quando um algum for removido
+     *child_moved = Ouvinte para ouvir as mudanças na prioridade de um filho
+     */
+
+    this.tarefaProvider.reference.limitToLast(1).on('child_added', (snapshot) => {
       let tarefaRemovida = snapshot.val();
       this.toastCtrl.create({
-        message: 'Tarefa ' + tarefaRemovida.titulo + ' removida',
-       duration: 3000
+        message: 'Tarefa ' + tarefaRemovida.titulo + ' adicionada com sucesso!',
+        duration: 3000
+      }).present();
+    }) 
+
+    this.tarefaProvider.reference.on('child_changed', (snapshot) => {
+      let tarefaRemovida = snapshot.val();
+      this.toastCtrl.create({
+        message: 'Tarefa ' + tarefaRemovida.titulo + ' alterada com sucesso!',
+        duration: 3000
       }).present();
     })
 
+    this.tarefaProvider.reference.on('child_removed', (snapshot) => {
+      let tarefaRemovida = snapshot.val();
+      this.toastCtrl.create({
+        message: 'Tarefa ' + tarefaRemovida.titulo + ' removida com sucesso!',
+        duration: 3000
+      }).present();
+    })
+
+
+
     this.tarefaProvider.reference.on('value', (snapshot) => {
-      /*
-      *value - Escuta todas as alterações da referência
-      *child_added - Ouvinte para quando um filho for adicionado
-      *child_changed - Ouvinte para quando um algum for alterado
-      *child_removed - Ouvinte para quando um algum for removido
-      *child_moved = Ouvinte para ouvir as mudanças na prioridade de um filho
-      */
+
       this.ngZone.run(() => {
         let innerArray = new Array();
 
@@ -51,7 +71,7 @@ export class TarefasListPage {
 
         this.tarefas = innerArray;
       })
-      
+
     })
     //this.tarefas = this.tarefaProvider.getAll();
 
@@ -72,7 +92,7 @@ export class TarefasListPage {
     ).catch(error => console.log('não foi possível deletar a tarefa'))
   }
 
-  sair(){
+  sair() {
     this.loginProvider.logOut();
   }
 }

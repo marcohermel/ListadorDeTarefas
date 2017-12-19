@@ -4,6 +4,7 @@ import { LoginProvider } from './../../providers/login/login';
 import { RegistrarPage } from './../registrar/registrar';
 import { Component } from '@angular/core';
 import { IonicPage, NavController } from 'ionic-angular';
+import { MenuController } from 'ionic-angular/components/app/menu-controller';
 
 
 @IonicPage()
@@ -15,8 +16,19 @@ export class LoginPage {
 
   credencial: Credencial;
 
-  constructor(public navCtrl: NavController, public loginProvider: LoginProvider) {
-    this.credencial = new Credencial();
+  constructor(public navCtrl: NavController,
+    public loginProvider: LoginProvider,
+    public menuCtrl: MenuController) {
+      this.initialize();
+  }
+
+  private initialize() {
+    this.credencial = new Credencial(); 
+  }
+
+  ionViewDidEnter() {
+    this.menuCtrl.enable(true);
+    this.menuCtrl.swipeEnable(true);
   }
 
   ionViewDidLoad() {
